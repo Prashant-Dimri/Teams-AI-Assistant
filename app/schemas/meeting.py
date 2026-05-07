@@ -1,3 +1,4 @@
+#app/schemas/meeting.py
 from pydantic import BaseModel, EmailStr, Field
 from typing import List
 
@@ -15,3 +16,11 @@ class MeetingCreateRequest(BaseModel):
 class MeetingCreateResponse(BaseModel):
     status_code: int
     graph_response: dict
+
+class SlotItem(BaseModel):
+    start: str
+    end: str
+
+
+class MeetingSlotsResponse(BaseModel):
+    booked_slots: List[SlotItem]

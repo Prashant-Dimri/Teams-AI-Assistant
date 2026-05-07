@@ -1,8 +1,9 @@
+#app/api/v1/meeting.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.dependencies import get_db
 from app.schemas.meeting import MeetingCreateRequest, MeetingCreateResponse
-from app.services.graph_meeting_service import create_teams_meeting, join_meeting_service
+from app.services.graph_meeting_service import create_teams_meeting, join_meeting_service,get_booked_slots
 from datetime import datetime
 from app.models.upcoming_meeting import UpcomingMeeting
 
@@ -50,4 +51,17 @@ def join_meeting(meeting_id: int, db: Session = Depends(get_db)):
         "meeting_id": meeting.id,
         "case_id": meeting.case_id,
         "join_url": meeting.join_url
+    }
+    
+@router.get("/available-slots")
+def available_slots(
+    case_id: int,
+    date: str,
+    timezone: str,
+    db: Session = Depends(get_db)
+):
+    slots = get_booked_slots(case_id, date, timezone, db)
+
+    return {
+        "booked_slots": slots
     }
