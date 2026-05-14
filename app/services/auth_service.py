@@ -84,8 +84,10 @@ class AuthService:
             "access_token": access,
             "token_type": "bearer",
             "refresh_token": refresh,
-            "roles": role_names  # useful for frontend
-            }
+            "roles": role_names,
+            "full_name": user.full_name,
+            "email": user.email,
+        }
 
     def list_users(self, current_user, case_id: int | None = None):
         current_roles = {r.name for r in current_user.roles}

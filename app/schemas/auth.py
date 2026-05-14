@@ -7,6 +7,8 @@ class Token(BaseModel):
     token_type: str = "bearer"
     refresh_token: Optional[str]
     roles: Optional[list]
+    full_name: Optional[str]
+    email: Optional[str]
 
 class TokenPayload(BaseModel):
     sub: str
